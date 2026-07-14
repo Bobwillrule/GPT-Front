@@ -10,5 +10,6 @@ export type ChatMessage =
       id: string;
       role: "assistant";
       text: string;
+      time: string;
       variant?: "default" | "quantum-demo";
     };

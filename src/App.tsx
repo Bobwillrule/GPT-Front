@@ -32,6 +32,7 @@ function createAssistantMessage(text: string): ChatMessage {
     id: createId("assistant"),
     role: "assistant",
     text,
+    time: formatChatTime(),
     variant: "default",
   };
 }

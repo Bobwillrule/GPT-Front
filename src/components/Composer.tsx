@@ -1,4 +1,4 @@
-import { FormEvent, KeyboardEvent, useRef } from "react";
+import { FormEvent, KeyboardEvent, useLayoutEffect, useRef } from "react";
 import { GlassPanel } from "./GlassPanel";
 import { BulbIcon, GlobeIcon, GridIcon, PaperclipIcon, SendIcon } from "./Icons";
 
@@ -30,6 +30,18 @@ export function Composer({
   disabled = false,
 }: ComposerProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useLayoutEffect(() => {
+    const textarea = textareaRef.current;
+
+    if (!textarea) {
+      return;
+    }
+
+    textarea.style.height = "0px";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  }, [value]);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -84,6 +96,7 @@ export function Composer({
             {placeholder}
           </label>
           <textarea
+            ref={textareaRef}
             id={`composer-${brand}`}
             className="composer__input"
             value={value}

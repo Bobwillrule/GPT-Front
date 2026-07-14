@@ -57,28 +57,43 @@ type ChatMessageViewProps = {
 };
 
 export function ChatMessageView({ message }: ChatMessageViewProps) {
+  async function copyMessage() {
+    try {
+      await navigator.clipboard.writeText(message.text);
+    } catch {
+      // Clipboard access can fail in unsupported or restricted contexts.
+    }
+  }
+
   if (message.role === "user") {
     return (
-      <div className="message-row message-row--user">
-        <GlassPanel className="message-bubble message-bubble--user" padding="28px 32px 22px" radius={34}>
-          <p>{message.text}</p>
-          {message.attachments?.length ? (
-            <div className="message-bubble__attachments">
-              {message.attachments.map((attachment) => (
-                <span key={attachment} className="message-bubble__attachment glass-button">
-                  {attachment}
-                </span>
-              ))}
-            </div>
-          ) : null}
-          <span>{message.time}</span>
-        </GlassPanel>
+      <div className="message-row message-row--user message-row--hoverable">
+        <div className="message-bubble-shell">
+          <div className="message-bubble message-bubble--user glass">
+            <p>{message.text}</p>
+            {message.attachments?.length ? (
+              <div className="message-bubble__attachments">
+                {message.attachments.map((attachment) => (
+                  <span key={attachment} className="message-bubble__attachment glass-button">
+                    {attachment}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+          </div>
+          <div className="message-meta message-meta--user">
+            <button className="message-meta__button glass-button" type="button" onClick={copyMessage}>
+              Copy
+            </button>
+            <span className="message-meta__time">{message.time}</span>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="message-row message-row--assistant">
+    <div className="message-row message-row--assistant message-row--hoverable">
       <GlassPanel className="assistant-mark" padding="0" radius={999}>
         <SparkIcon className="icon-svg" />
       </GlassPanel>
@@ -91,6 +106,12 @@ export function ChatMessageView({ message }: ChatMessageViewProps) {
             <p>{message.text}</p>
           </div>
         )}
+        <div className="message-meta">
+          <button className="message-meta__button glass-button" type="button" onClick={copyMessage}>
+            Copy
+          </button>
+          <span className="message-meta__time">{message.time}</span>
+        </div>
       </div>
     </div>
   );

@@ -52,14 +52,14 @@ export function ChatScreen({
       <div className="chat-dock">
         <Composer
           placeholder="Message X-Ray AI"
-        brand="X-Ray AI"
-        value={draft}
-        onChange={onDraftChange}
-        onSubmit={() => onSubmit(draft)}
-        files={files}
-        onFilesChange={onFilesChange}
-        disabled={isResponding}
-      />
+          brand="X-Ray AI"
+          value={draft}
+          onChange={onDraftChange}
+          onSubmit={() => onSubmit(draft)}
+          files={files}
+          onFilesChange={onFilesChange}
+          disabled={isResponding}
+        />
         <p className="chat-footer">X-Ray AI can make mistakes. Check important info.</p>
       </div>
     </section>
