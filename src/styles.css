@@ -531,6 +531,8 @@ a {
 }
 
 .message-bubble--user {
+  width: fit-content;
+  max-width: min(560px, 100%);
   padding: 18px 22px 14px;
   border-radius: 28px;
   box-shadow: 0 16px 44px rgba(72, 32, 160, 0.28);
