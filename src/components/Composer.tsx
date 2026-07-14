@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, KeyboardEvent } from "react";
 import { GlassPanel } from "./GlassPanel";
 import { BulbIcon, GlobeIcon, GridIcon, PaperclipIcon, SendIcon } from "./Icons";
 
@@ -34,6 +34,20 @@ export function Composer({
     onSubmit();
   }
 
+  function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key !== "Enter" || event.shiftKey) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (!value.trim() || disabled) {
+      return;
+    }
+
+    onSubmit();
+  }
+
   return (
     <form className="composer-form" onSubmit={handleSubmit}>
       <GlassPanel className="composer" padding="26px 24px 18px" radius={34}>
@@ -45,6 +59,7 @@ export function Composer({
           className="composer__input"
           value={value}
           onChange={(event) => onChange(event.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder={placeholder}
           rows={1}
         />

@@ -1,38 +1,4 @@
 import { Composer } from "../components/Composer";
-import { PromptCard } from "../components/PromptCard";
-
-const promptCards = [
-  {
-    title: "Explain",
-    description: "quantum computing in simple terms",
-    accent: "rgba(129, 102, 255, 0.65)",
-    icon: "grid" as const,
-  },
-  {
-    title: "Write",
-    description: "a Python script to scrape cleanly",
-    accent: "rgba(220, 99, 255, 0.55)",
-    icon: "code" as const,
-  },
-  {
-    title: "Analyze",
-    description: "this ETF portfolio with visuals",
-    accent: "rgba(52, 210, 203, 0.55)",
-    icon: "chart" as const,
-  },
-  {
-    title: "Design",
-    description: "a workout plan landing page",
-    accent: "rgba(255, 164, 52, 0.55)",
-    icon: "sliders" as const,
-  },
-  {
-    title: "Plan",
-    description: "a thoughtful Taiwan itinerary",
-    accent: "rgba(255, 109, 209, 0.55)",
-    icon: "paperclip" as const,
-  },
-];
 
 type HomeScreenProps = {
   draft: string;
@@ -60,14 +26,6 @@ export function HomeScreen({ draft, onDraftChange, onSubmit }: HomeScreenProps) 
         onChange={onDraftChange}
         onSubmit={() => onSubmit(draft)}
       />
-
-      <div className="prompt-grid">
-        {promptCards.map((card) => (
-          <PromptCard key={card.title} {...card} onClick={() => onSubmit(card.description)} />
-        ))}
-      </div>
-
-      <div className="scroll-cue">v</div>
     </section>
   );
 }

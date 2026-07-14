@@ -342,6 +342,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  margin-top: 10px;
 }
 
 .composer__tools {
@@ -386,71 +387,6 @@ a {
   cursor: default;
   opacity: 0.55;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-.prompt-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 14px;
-  width: 100%;
-  margin-top: 18px;
-}
-
-.prompt-card {
-  position: relative;
-  min-height: 168px;
-  overflow: hidden;
-}
-
-.prompt-card::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--card-accent), transparent);
-  opacity: 0.95;
-}
-
-.prompt-card__icon {
-  display: inline-grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  margin-bottom: 14px;
-  color: var(--card-accent);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-.prompt-card h3 {
-  margin: 0 0 8px;
-  font-size: 1.3rem;
-  font-weight: 600;
-}
-
-.prompt-card p {
-  margin: 0;
-  color: var(--text-soft);
-  line-height: 1.5;
-  font-size: 0.86rem;
-  max-width: 16ch;
-}
-
-.prompt-card__action {
-  display: grid;
-  place-items: center;
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.scroll-cue {
-  display: none;
 }
 
 .screen--chat {
@@ -673,10 +609,6 @@ a {
 }
 
 @media (max-width: 1180px) {
-  .prompt-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .hero-copy {
     margin-top: -280px;
   }
@@ -726,6 +658,7 @@ a {
   .composer__footer {
     flex-direction: column;
     align-items: stretch;
+    margin-top: 12px;
   }
 
   .composer__tools {
@@ -735,10 +668,6 @@ a {
 
   .send-button {
     align-self: flex-end;
-  }
-
-  .prompt-grid {
-    grid-template-columns: 1fr;
   }
 
   .screen--chat {
