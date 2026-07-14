@@ -8,6 +8,8 @@ type ChatScreenProps = {
   draft: string;
   onDraftChange: (value: string) => void;
   onSubmit: (message: string) => void;
+  files: File[];
+  onFilesChange: (files: File[]) => void;
   isResponding: boolean;
 };
 
@@ -16,6 +18,8 @@ export function ChatScreen({
   draft,
   onDraftChange,
   onSubmit,
+  files,
+  onFilesChange,
   isResponding,
 }: ChatScreenProps) {
   const logRef = useRef<HTMLDivElement | null>(null);
@@ -48,12 +52,14 @@ export function ChatScreen({
       <div className="chat-dock">
         <Composer
           placeholder="Message X-Ray AI"
-          brand="X-Ray AI"
-          value={draft}
-          onChange={onDraftChange}
-          onSubmit={() => onSubmit(draft)}
-          disabled={isResponding}
-        />
+        brand="X-Ray AI"
+        value={draft}
+        onChange={onDraftChange}
+        onSubmit={() => onSubmit(draft)}
+        files={files}
+        onFilesChange={onFilesChange}
+        disabled={isResponding}
+      />
         <p className="chat-footer">X-Ray AI can make mistakes. Check important info.</p>
       </div>
     </section>

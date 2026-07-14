@@ -4,9 +4,17 @@ type HomeScreenProps = {
   draft: string;
   onDraftChange: (value: string) => void;
   onSubmit: (message: string) => void;
+  files: File[];
+  onFilesChange: (files: File[]) => void;
 };
 
-export function HomeScreen({ draft, onDraftChange, onSubmit }: HomeScreenProps) {
+export function HomeScreen({
+  draft,
+  onDraftChange,
+  onSubmit,
+  files,
+  onFilesChange,
+}: HomeScreenProps) {
   return (
     <section className="screen screen--home">
       <div className="hero-orb">
@@ -25,6 +33,8 @@ export function HomeScreen({ draft, onDraftChange, onSubmit }: HomeScreenProps) 
         value={draft}
         onChange={onDraftChange}
         onSubmit={() => onSubmit(draft)}
+        files={files}
+        onFilesChange={onFilesChange}
       />
     </section>
   );

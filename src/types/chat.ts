@@ -4,6 +4,7 @@ export type ChatMessage =
       role: "user";
       text: string;
       time: string;
+      attachments?: string[];
     }
   | {
       id: string;

@@ -62,6 +62,15 @@ export function ChatMessageView({ message }: ChatMessageViewProps) {
       <div className="message-row message-row--user">
         <GlassPanel className="message-bubble message-bubble--user" padding="28px 32px 22px" radius={34}>
           <p>{message.text}</p>
+          {message.attachments?.length ? (
+            <div className="message-bubble__attachments">
+              {message.attachments.map((attachment) => (
+                <span key={attachment} className="message-bubble__attachment glass-button">
+                  {attachment}
+                </span>
+              ))}
+            </div>
+          ) : null}
           <span>{message.time}</span>
         </GlassPanel>
       </div>

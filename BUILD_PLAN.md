@@ -13,6 +13,7 @@ Create a React frontend that captures the feel of the provided concepts:
 - The provided background image is wired into the shared scene.
 - The liquid glass library is integrated through an app-level wrapper component.
 - Phase 2 is now focused on visual tuning and refinement.
+- The frontend is now prepared for a FastAPI backend that accepts text and optional file uploads and returns text.
 
 ## Phase 1: Foundation
 - Scaffold the app with Vite, React, and TypeScript.
@@ -59,3 +60,8 @@ Create a React frontend that captures the feel of the provided concepts:
 - Replace placeholder ASCII icons with the final icon set.
 - Tune the glass parameters, spacing, glow, and typography across both screens.
 - Decide whether the next milestone is a static polished prototype or a wired chat experience.
+
+## Backend Prep Notes
+- Frontend request wiring lives in `src/lib/api.ts`.
+- The FastAPI stub lives in `backend/main.py`.
+- The `/api/chat` endpoint currently returns text-only JSON and is the place to connect your real backend pipeline later.

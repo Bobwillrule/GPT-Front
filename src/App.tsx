@@ -1,42 +1,76 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AppFrame } from "./components/AppFrame";
-import { createAssistantReply, createUserMessage, initialMessages } from "./lib/mockAssistant";
+import { sendChatMessage } from "./lib/api";
 import { ChatScreen } from "./screens/ChatScreen";
 import { HomeScreen } from "./screens/HomeScreen";
 import { ChatMessage } from "./types/chat";
 
+function createId(prefix: string) {
+  return `${prefix}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function formatChatTime(date = new Date()) {
+  return date.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function createUserMessage(text: string, files: File[]): ChatMessage {
+  return {
+    id: createId("user"),
+    role: "user",
+    text,
+    time: formatChatTime(),
+    attachments: files.map((file) => file.name),
+  };
+}
+
+function createAssistantMessage(text: string): ChatMessage {
+  return {
+    id: createId("assistant"),
+    role: "assistant",
+    text,
+    variant: "default",
+  };
+}
+
 export function App() {
   const [draft, setDraft] = useState("");
-  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
+  const [draftFiles, setDraftFiles] = useState<File[]>([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isResponding, setIsResponding] = useState(false);
   const navigate = useNavigate();
-  const responseTimeoutRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (responseTimeoutRef.current) {
-        window.clearTimeout(responseTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  function submitMessage(rawMessage: string) {
+  async function submitMessage(rawMessage: string) {
     const text = rawMessage.trim();
-    if (!text || isResponding) {
+    if ((!text && draftFiles.length === 0) || isResponding) {
       return;
     }
 
-    const userMessage = createUserMessage(text);
+    const filesToSend = [...draftFiles];
+    const userMessage = createUserMessage(text, filesToSend);
+
     setMessages((current) => [...current, userMessage]);
     setDraft("");
+    setDraftFiles([]);
     setIsResponding(true);
     navigate("/chat");
 
-    responseTimeoutRef.current = window.setTimeout(() => {
-      setMessages((current) => [...current, createAssistantReply(text)]);
+    try {
+      const reply = await sendChatMessage(text, filesToSend);
+      setMessages((current) => [...current, createAssistantMessage(reply)]);
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? `${error.message}. Connect your real FastAPI backend at /api/chat when ready.`
+          : "Failed to reach the backend. Connect your real FastAPI backend at /api/chat when ready.";
+
+      setMessages((current) => [...current, createAssistantMessage(message)]);
+    } finally {
       setIsResponding(false);
-    }, 700);
+    }
   }
 
   return (
@@ -44,7 +78,15 @@ export function App() {
       <Routes>
         <Route
           path="/"
-          element={<HomeScreen draft={draft} onDraftChange={setDraft} onSubmit={submitMessage} />}
+          element={
+            <HomeScreen
+              draft={draft}
+              onDraftChange={setDraft}
+              onSubmit={submitMessage}
+              files={draftFiles}
+              onFilesChange={setDraftFiles}
+            />
+          }
         />
         <Route
           path="/chat"
@@ -54,6 +96,8 @@ export function App() {
               draft={draft}
               onDraftChange={setDraft}
               onSubmit={submitMessage}
+              files={draftFiles}
+              onFilesChange={setDraftFiles}
               isResponding={isResponding}
             />
           }
