@@ -44,6 +44,14 @@ export function App() {
   const [isResponding, setIsResponding] = useState(false);
   const navigate = useNavigate();
 
+  function startNewChat() {
+    setDraft("");
+    setDraftFiles([]);
+    setMessages([]);
+    setIsResponding(false);
+    navigate("/");
+  }
+
   async function submitMessage(rawMessage: string) {
     const text = rawMessage.trim();
     if ((!text && draftFiles.length === 0) || isResponding) {
@@ -75,7 +83,7 @@ export function App() {
   }
 
   return (
-    <AppFrame>
+    <AppFrame onNewChat={startNewChat}>
       <Routes>
         <Route
           path="/"

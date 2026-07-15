@@ -155,3 +155,31 @@ export function ArrowRightIcon(props: IconProps) {
     </BaseIcon>
   );
 }
+
+export function PlusIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M12 5V19" />
+      <path d="M5 12H19" />
+    </BaseIcon>
+  );
+}
+
+export function InfoIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <circle cx="12" cy="12" r="8.25" />
+      <path d="M12 10.25V15.25" />
+      <path d="M12 7.75H12.01" />
+    </BaseIcon>
+  );
+}
+
+export function XIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M6 6L18 18" />
+      <path d="M18 6L6 18" />
+    </BaseIcon>
+  );
+}
